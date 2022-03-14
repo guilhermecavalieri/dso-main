@@ -1,6 +1,5 @@
 from view.TelaAbstrata import TelaAbstrata
 import PySimpleGUI as sg
-
 class TelaAdicionarParticipante(TelaAbstrata):
 
     def __init__(self):
