@@ -13,6 +13,7 @@ class ControladorEventos():
         self.__tela_eventos = TelaEventos()
         self.__tela_adicionar_evento = TelaAdicionarEventos()
         self.__tela_editar_evento = TelaEditarEventos()
+        self.__evento_dao = DAOEvento()
         
     @property
     def eventos(self):
@@ -23,7 +24,7 @@ class ControladorEventos():
             hoje = datetime.datetime.now()
             eventos_a_ocorrer = []
             eventos_ocorridos = []
-            for evento in self.__dao.get_all():
+            for evento in self.__eventos:
                 if evento.data > hoje:
                     eventos_a_ocorrer.append(evento)
                 else:
@@ -111,7 +112,7 @@ class ControladorEventos():
             self.menu_adicionar_evento()
             return None
         
-        for evento in self.__dao.get_all():
+        for evento in self.__eventos:
             if evento.titulo == dados["it_titulo"]:
                 self.__tela_adicionar_evento.mostra_mensagem("Esse evento já existe")
                 self.menu_adicionar_evento()
@@ -119,7 +120,7 @@ class ControladorEventos():
             
         data = datetime.datetime(int(dados["it_data3"]), int(dados["it_data2"]), int(dados["it_data1"]), int(dados["it_horario1"]), int(dados["it_horario2"]))
         novo_evento = Evento(dados["it_titulo"], data, dados["it_local"], dados["it_capacidade"])
-        self.__dao.add(novo_evento)
+        self.__eventos.append(novo_evento)
         self.__tela_adicionar_evento.mostra_mensagem("Evento cadastrado com sucesso")
         
         self.menu_eventos()
