@@ -1,32 +1,32 @@
 from view.TelaAbstrata import TelaAbstrata
 import PySimpleGUI as sg
 
-class TelaAdicionarEventos(TelaAbstrata):
+class TelaEditarEventos(TelaAbstrata):
 
     def __init__(self):
         self.__window = None
         
-    def init_components(self):
+    def init_components(self, dados):
         sg.ChangeLookAndFeel("Reddit")
         
         layout = [
-            [sg.Text("DADOS DO EVENTO", font=("Helvetica", 20), justification="center")],
-            [self.cria_input_de_string("Título do evento:", "it_titulo", None)],
-            [self.cria_input_de_data("Data:", "it_data1", "it_data2", "it_data3", None, None, None)],
-            [self.cria_input_de_horario("Horário:", "it_horario1", "it_horario2", None, None)],
-            [self.cria_input_de_string("Capacidade máxima:", "it_capacidade", None)],
-            [self.cria_input_de_string("Local:", "it_local", None)],
-            [sg.Submit("Confirmar", key="bt_confirmar"), sg.Submit("Cancelar", key="bt_cancelar")]
+            [sg.Text("EDITAR EVENTO", font=("Helvetica", 20), justification="center")],
+            [self.cria_input_de_string("Título do evento:", "it_titulo", dados["titulo"])],
+            [self.cria_input_de_data("Data:", "it_data1", "it_data2", "it_data3", dados["data1"], dados["data2"], dados["data3"])],
+            [self.cria_input_de_horario("Horário:", "it_horario1", "it_horario2", dados["horario1"], dados["horario2"])],
+            [self.cria_input_de_string("Capacidade máxima:", "it_capacidade", dados["capacidade"])],
+            [self.cria_input_de_string("Local:", "it_local", dados["local"])],
+            [sg.Submit("Alterar", key="bt_alterar"), sg.Submit("Cancelar", key="bt_cancelar"), sg.Submit("Excluir", key="bt_excluir")]
                 ]
         
         self.__window = sg.Window("Gerenciador de eventos", element_justification="c").Layout(layout)
         
-    def open(self):
-        self.init_components()
+    def open(self, dados):
+        self.init_components(dados)
         while True:
             event, values = self.__window.Read()
             print (event, values)
-            if event is None or event == "bt_confirmar" or event == "bt_cancelar":
+            if event is None or event == "bt_alterar" or event == "bt_cancelar" or event == "bt_excluir":
                 break
             elif len(values["it_titulo"]) > 30:
                 self.__window.Element("it_titulo").Update(values['it_titulo'][:-1])

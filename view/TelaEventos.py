@@ -17,14 +17,18 @@ class TelaEventos(TelaAbstrata):
                     headings=["NOME", "LOCAL"], 
                     justification="center", 
                     expand_x=True, 
-                    expand_y=True)],
+                    expand_y=True,
+                    bind_return_key=True,
+                    key="a_ocorrer")],
             [sg.Text("__________________________________________")],
             [sg.Text("EVENTOS OCORRIDOS")],
             [sg.Table(values=ocorridos, 
                     headings=["NOME", "LOCAL"], 
                     justification="center", 
                     expand_x=True, 
-                    expand_y=True)],
+                    expand_y=True,
+                    bind_return_key=True,
+                    key="ocorridos")],
             [sg.Text("__________________________________________")],
             [sg.Button("Adicionar evento", key="bt_adicionar_evento")],
             [sg.Text("", size=(1,1))],
@@ -46,7 +50,7 @@ class TelaEventos(TelaAbstrata):
         
         self.init_components(a_ocorrer, ocorridos)
         event, values = self.__window.Read()
-        return event
+        return event, values
     
     def close(self):
         self.__window.Close()
