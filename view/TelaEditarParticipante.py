@@ -26,7 +26,7 @@ class TelaEditarParticipante(TelaAbstrata):
         while True:
             event, values = self.__window.Read()
             print (event, values)
-            if event is None or event == "bt_alterar" or event == "bt_cancelar" or event =="bt_alterar":
+            if event is None or event == "bt_alterar" or event == "bt_cancelar" or event =="bt_excluir":
                 break
             elif len(values["it_nome"]) > 30 or (values["it_nome"] and (not values["it_nome"][-1].isalpha())):
                 self.__window.Element("it_nome").Update(values['it_nome'][:-1])
