@@ -1,5 +1,4 @@
 import datetime
-from msilib.schema import Error
 from multiprocessing.sharedctypes import Value
 from view.TelaAdicionarEvento import TelaAdicionarEventos
 from view.TelaEventos import TelaEventos
