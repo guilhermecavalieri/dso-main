@@ -8,7 +8,7 @@ from daos.DAOEvento import DAOEvento
 class ControladorEventos():
 
     def __init__(self, controlador_sistema):
-        self.__eventos = []
+        #self.__eventos = []
         self.__controlador_sistema = controlador_sistema
         self.__tela_eventos = TelaEventos()
         self.__tela_adicionar_evento = TelaAdicionarEventos()
@@ -20,7 +20,7 @@ class ControladorEventos():
             hoje = datetime.datetime.now()
             eventos_a_ocorrer = []
             eventos_ocorridos = []
-            for evento in self.__eventos:
+            for evento in self.__dao.get_all():
                 if evento.data > hoje:
                     eventos_a_ocorrer.append(evento)
                 else:
@@ -105,7 +105,7 @@ class ControladorEventos():
             self.menu_adicionar_evento()
             return None
         
-        for evento in self.__eventos:
+        for evento in self.__dao.get_all():
             if evento.titulo == dados["it_titulo"]:
                 self.__tela_adicionar_evento.mostra_mensagem("Esse evento já existe")
                 self.menu_adicionar_evento()
@@ -113,24 +113,15 @@ class ControladorEventos():
             
         data = datetime.datetime(int(dados["it_data3"]), int(dados["it_data2"]), int(dados["it_data1"]), int(dados["it_horario1"]), int(dados["it_horario2"]))
         novo_evento = Evento(dados["it_titulo"], data, dados["it_local"], dados["it_capacidade"])
-        self.__eventos.append(novo_evento)
+        self.__dao.add(novo_evento)
         self.__tela_adicionar_evento.mostra_mensagem("Evento cadastrado com sucesso")
         
         self.menu_eventos()
 
     def excluir_evento(self, evento):
 
-        self.__eventos.remove(evento)
+        self.__dao.remove(evento)
         self.__tela_editar_evento.mostra_mensagem("EVENTO EXCLUÍDO")
         
     def voltar_menu_principal(self):
         self.__controlador_sistema.menu_principal()
-
-    def salva_dados_evento(self, menu_eventos):
-        self.__dao.add(Evento(
-        menu_eventos['titulo'],
-        menu_eventos['data'],
-        menu_eventos['local'],
-        menu_eventos['capacidade_maxima'],
-        menu_eventos['organizadores']
-    ))
