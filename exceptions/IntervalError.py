@@ -1,0 +1,2 @@
+class IntervalError(Exception):
+    pass
