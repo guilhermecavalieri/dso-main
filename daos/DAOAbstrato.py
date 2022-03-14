@@ -3,6 +3,7 @@ from functools import cache
 import pickle
 
 class DAO(ABC):
+
     def __init__(self, datasource=''):
         self.__datasource = datasource
         self.__cache = {}
