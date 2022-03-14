@@ -1,7 +1,9 @@
+from daos.DAOOrganizador import DAOOrganizador
 from view.TelaAdicionarOrganizador import TelaAdicionarOrganizador
 from view.TelaAdicionarParticipante import TelaAdicionarParticipante
 from view.TelaEditarOrganizador import TelaEditarOrganizador
 from view.TelaEditarParticipante import TelaEditarParticipante
+from daos.DAOParticipantes import DAOParticipante
 from view.TelaPessoas import TelaPessoas
 from model.participante import Participante
 from model.organizador import Organizador
@@ -16,6 +18,8 @@ class ControladorPessoas:
         self.__tela_adicionar_organizadores = TelaAdicionarOrganizador()
         self.__tela_editar_organizador = TelaEditarOrganizador()
         self.__tela_editar_participante = TelaEditarParticipante()
+        self.__participantes_dao = DAOParticipante()
+        self.__organizadores_dao = DAOOrganizador()
         self.__participantes = []
         self.__organizadores = []
         
