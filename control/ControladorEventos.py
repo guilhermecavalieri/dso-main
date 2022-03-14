@@ -3,6 +3,7 @@ from view.TelaAdicionarEvento import TelaAdicionarEventos
 from view.TelaEditarEvento import TelaEditarEventos
 from view.TelaEventos import TelaEventos
 from model.evento import Evento
+from daos.DAOEvento import DAOEvento
 
 class ControladorEventos():
 
@@ -12,6 +13,7 @@ class ControladorEventos():
         self.__tela_eventos = TelaEventos()
         self.__tela_adicionar_evento = TelaAdicionarEventos()
         self.__tela_editar_evento = TelaEditarEventos()
+        self.__dao = DAOEvento()
 
     def organiza_eventos_por_tempo(self):
 
@@ -123,3 +125,12 @@ class ControladorEventos():
         
     def voltar_menu_principal(self):
         self.__controlador_sistema.menu_principal()
+
+    def salva_dados_evento(self, menu_eventos):
+        self.__dao.add(Evento(
+        menu_eventos['titulo'],
+        menu_eventos['data'],
+        menu_eventos['local'],
+        menu_eventos['capacidade_maxima'],
+        menu_eventos['organizadores']
+    ))
