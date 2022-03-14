@@ -18,14 +18,6 @@ class ControladorPessoas:
         self.__tela_editar_participante = TelaEditarParticipante()
         self.__participantes = []
         self.__organizadores = []
-
-    @property
-    def organizadores(self):
-        return self.__organizadores
-
-    @property
-    def participantes(self):
-        return self.__participantes
         
     def excluir_organizador(self, organizador):
         self.__organizadores.remove(organizador)
@@ -40,11 +32,8 @@ class ControladorPessoas:
             self.__tela_editar_organizador.mostra_mensagem("Preencha corretamente os dados")
             self.menu_editar_organizador(organizador)
             return None
-        for organizador in self.__organizadores:
-            if organizador.cpf == dados["it_cpf"]:
-                self.__tela_editar_organizador.mostra_mensagem("Esse organizador já existe")
-                self.menu_editar_organizador(organizador)
-                return None
+
+            
         organizador.nome = dados["it_nome"]
         organizador.cpf = dados["it_cpf"]
         self.__tela_editar_organizador.mostra_mensagem("Organizador alterado com sucesso")
@@ -77,6 +66,16 @@ class ControladorPessoas:
     def menu_editar_participante(self, participante_para_editar):
         dados_participante = {"nome":participante_para_editar.nome, "cpf":participante_para_editar.cpf, "endereco":participante_para_editar.endereco, "data1":participante_para_editar.nascimento.day, "data2":participante_para_editar.nascimento.month, "data3":participante_para_editar.nascimento.year, "vacina":participante_para_editar.vacina}
         opcao_escolhida, dados_novos = self.__tela_editar_participante.open(dados_participante)
+        if dados_novos["it_eventoincluido"] != "":
+            evento = self.__controlador_sistema.pegar_evento_por_titulo(dados_novos["it_eventoincluido"])
+            evento.participantes.append(participante_para_editar)
+            evento.num_participantes += 1
+            
+        if dados_novos["it_eventoexcluido"] != "":
+            evento = self.__controlador_sistema.pegar_evento_por_titulo(dados_novos["it_eventoexcluido"])
+            evento.participantes.revome(participante_para_editar)
+            evento.num_participantes -= 1
+            
         if opcao_escolhida == "bt_alterar":
             self.__tela_editar_participante.close()
             self.editar_participante(dados_novos, participante_para_editar)
@@ -97,11 +96,7 @@ class ControladorPessoas:
             self.__tela_editar_participante.mostra_mensagem("Preencha corretamente os campos")
             self.menu_editar_participante(participante)
             return None
-        for participante in self.__participantes:
-            if participante.cpf == dados["it_cpf"]:
-                self.__tela_editar_participante.mostra_mensagem("Esse participante já existe")
-                self.menu_editar_participante(participante)
-                return None
+
         participante.nome = dados["it_nome"]
         data = datetime.datetime(int(dados["it_data3"]), int(dados["it_data2"]), int(dados["it_data1"]))
         participante.nascimento = data
@@ -172,6 +167,13 @@ class ControladorPessoas:
     def menu_editar_organizador(self, organizador_para_editar):
         dados_organizador = {"nome":organizador_para_editar.nome, "cpf":organizador_para_editar.cpf}
         opcao_escolhida, dados_novos = self.__tela_editar_organizador.open(dados_organizador)
+        if dados_novos["it_eventoincluido"] != "":
+            evento = self.__controlador_sistema.pegar_evento_por_titulo(dados_novos["it_eventoincluido"])
+            evento.organizadores.append(organizador_para_editar)
+            
+        if dados_novos["it_eventoexcluido"] != "":
+            evento = self.__controlador_sistema.pegar_evento_por_titulo(dados_novos["it_eventoexcluido"])
+            evento.organizadores.remove(organizador_para_editar)
         if opcao_escolhida == "bt_alterar":
             self.__tela_editar_organizador.close()
             self.editar_organizador(dados_novos, organizador_para_editar)

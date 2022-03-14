@@ -14,7 +14,7 @@ class TelaEventos(TelaAbstrata):
             [sg.Text("__________________________________________")],
             [sg.Text("EVENTOS A OCORRER")],
             [sg.Table(values=a_ocorrer, 
-                    headings=["NOME", "LOCAL"], 
+                    headings=["NOME", "LOCAL", "DATA", "CAPACIDADE MÁXIMA", "PARTICIPANTES"], 
                     justification="center", 
                     expand_x=True, 
                     expand_y=True,
@@ -23,7 +23,7 @@ class TelaEventos(TelaAbstrata):
             [sg.Text("__________________________________________")],
             [sg.Text("EVENTOS OCORRIDOS")],
             [sg.Table(values=ocorridos, 
-                    headings=["NOME", "LOCAL"], 
+                    headings=["NOME", "LOCAL", "DATA", "CAPACIDADE MÁXIMA", "PARTICIPANTES"], 
                     justification="center", 
                     expand_x=True, 
                     expand_y=True,
@@ -43,10 +43,10 @@ class TelaEventos(TelaAbstrata):
         ocorridos = []
         
         for evento in eventos_a_ocorrer:
-            a_ocorrer.append([evento.titulo, evento.local])
+            a_ocorrer.append([evento.titulo, evento.local, evento.data, evento.capacidade_maxima, evento.num_participantes])
             
         for evento in eventos_ocorridos:
-            ocorridos.append([evento.titulo, evento.local])
+            ocorridos.append([evento.titulo, evento.local, evento.data, evento.capacidade_maxima, evento.num_participantes])
         
         self.init_components(a_ocorrer, ocorridos)
         event, values = self.__window.Read()

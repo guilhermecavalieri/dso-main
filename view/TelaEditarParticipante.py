@@ -10,6 +10,8 @@ class TelaEditarParticipante(TelaAbstrata):
         sg.ChangeLookAndFeel("Reddit")
         
         layout = [
+            [sg.Text("Incluir participante no evento:"), sg.InputText(key="it_eventoincluido")],
+            [sg.Text("Excluir participante no evento:"), sg.InputText(key="it_eventoexcluido")],
             [sg.Text("EDITAR PARTICIPANTE", font=("Helvetica", 20), justification="center")],
             [self.cria_input_de_string("Nome:", "it_nome", dados["nome"])],
             [self.cria_input_de_data("Nascimento:", "it_data1", "it_data2", "it_data3", dados["data1"], dados["data2"], dados["data3"])],

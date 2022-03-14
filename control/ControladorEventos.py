@@ -12,6 +12,10 @@ class ControladorEventos():
         self.__tela_eventos = TelaEventos()
         self.__tela_adicionar_evento = TelaAdicionarEventos()
         self.__tela_editar_evento = TelaEditarEventos()
+        
+    @property
+    def eventos(self):
+        return self.__eventos
 
     def organiza_eventos_por_tempo(self):
 
@@ -49,7 +53,10 @@ class ControladorEventos():
     def menu_editar_evento(self, evento_para_editar):
         
         dados_evento = {"titulo":evento_para_editar.titulo, "data1":evento_para_editar.data.day, "data2":evento_para_editar.data.month, "data3":evento_para_editar.data.year, "horario1":evento_para_editar.data.hour, "horario2":evento_para_editar.data.minute, "capacidade":evento_para_editar.capacidade_maxima, "local":evento_para_editar.local}
-        opcao_escolhida, dados_novos = self.__tela_editar_evento.open(dados_evento)
+        nomes_organizadores = self.nomes_organizadores(evento_para_editar)
+        nomes_cpf_a_confirmar = self.nomes_cpf_a_confirmar(evento_para_editar)
+        nomes_cpf_confirmados = self.nomes_cpf_confirmados(evento_para_editar)
+        opcao_escolhida, dados_novos = self.__tela_editar_evento.open(dados_evento, nomes_organizadores, nomes_cpf_a_confirmar, nomes_cpf_confirmados)
         if opcao_escolhida == "bt_alterar":
             self.__tela_editar_evento.close()
             self.editar_evento(dados_novos, evento_para_editar)
@@ -123,3 +130,23 @@ class ControladorEventos():
         
     def voltar_menu_principal(self):
         self.__controlador_sistema.menu_principal()
+        
+    def nomes_organizadores(self, evento):
+        nomes = []
+        for organizador in evento.organizadores:
+            nomes.append(organizador.nome)
+        return nomes
+    
+    def nomes_cpf_a_confirmar(self, evento):
+        nomes_cpf = []
+        for participante in evento.participantes:
+            if participante.vacina == False:
+                nomes_cpf.append([participante.nome, participante.cpf])
+        return nomes_cpf
+    
+    def nomes_cpf_confirmados(self, evento):
+        nomes_cpf = []
+        for participante in evento.participantes:
+            if participante.vacina == True:
+                nomes_cpf.append([participante.nome, participante.cpf])
+        return nomes_cpf

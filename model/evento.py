@@ -10,8 +10,6 @@ class Evento:
         self.__organizadores = []
         self.__participantes = []
         self.__num_participantes = 0
-        self.__entradas = []
-        self.__saidas = []
 
     @property
     def titulo(self):
@@ -64,11 +62,7 @@ class Evento:
     @property
     def num_participantes(self):
         return self.__num_participantes
-
-    @property
-    def entradas(self):
-        return self.__entradas
-
-    @property
-    def saidas(self):
-        return self.__saidas
+    
+    @num_participantes.setter
+    def num_participantes(self, num_participantes):
+        self.__num_participantes = num_participantes

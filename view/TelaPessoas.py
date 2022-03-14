@@ -16,7 +16,7 @@ class TelaPessoas(TelaAbstrata):
             [sg.Text("__________________________________________")],
             [sg.Text("PARTICIPANTES")],
             [sg.Table(values=nome_cpf_participantes, 
-                    headings=["NOME", "CPF"], 
+                    headings=["NOME", "CPF", "VACINADO"], 
                     justification="center", 
                     expand_x=True, 
                     expand_y=True,
@@ -45,7 +45,10 @@ class TelaPessoas(TelaAbstrata):
         nome_cpf_organizadores = []
         
         for participante in participantes:
-            nome_cpf_participantes.append([participante.nome, participante.cpf])
+            if participante.vacina == True:
+                nome_cpf_participantes.append([participante.nome, participante.cpf, "SIM"])
+            else:
+                nome_cpf_participantes.append([participante.nome, participante.cpf, "NÃO"])
             
         for organizador in organizadores:
             nome_cpf_organizadores.append([organizador.nome, organizador.cpf])

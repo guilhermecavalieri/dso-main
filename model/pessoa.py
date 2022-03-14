@@ -8,6 +8,7 @@ class Pessoa(ABC):
         self.__cpf = cpf
         self.__nascimento = nascimento
         self.__endereco = endereco
+        self.__eventos = []
 
     @property
     def nome(self):
@@ -40,3 +41,11 @@ class Pessoa(ABC):
     @endereco.setter
     def endereco(self, endereco:str):
         self.__endereco = endereco
+        
+    @property
+    def eventos(self):
+        return self.__eventos
+    
+    @eventos.setter
+    def eventos(self, eventos):
+        self.__eventos = eventos

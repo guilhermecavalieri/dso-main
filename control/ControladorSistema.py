@@ -26,3 +26,11 @@ class ControladorSistema:
         opcao_escolhida = self.__tela_sistema.open()
         funcao_escolhida = lista_opcoes[opcao_escolhida]
         funcao_escolhida()
+    
+    def pegar_evento_por_titulo(self, titulo):
+        
+        if self.__controlador_eventos.eventos:
+            for evento in self.__controlador_eventos.eventos:
+                if evento.titulo == titulo:
+                    return evento
+            return None

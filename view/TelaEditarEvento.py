@@ -6,10 +6,12 @@ class TelaEditarEventos(TelaAbstrata):
     def __init__(self):
         self.__window = None
         
-    def init_components(self, dados):
+    def init_components(self, dados, organizadores, participantes_a_confirmar, participantes_confirmados):
         sg.ChangeLookAndFeel("Reddit")
         
         layout = [
+            [sg.Text("ORGANIZADORES"), sg.Text("PARTICIPANTES CONFIRMADOS"), sg.Text("PARTICIPANTES A CONFIRMAR")],
+            [sg.Table(values=organizadores, headings=["NOME"], justification="center", expand_x=True, expand_y=True, key="organizadores"), sg.Table(values=participantes_confirmados, headings=["NOME", "CPF"], justification="center", expand_x=True, expand_y=True, key="confirmados"), sg.Table(values=participantes_a_confirmar, headings=["NOME", "CPF"], justification="center", expand_x=True, expand_y=True, key="a_confirmar")],
             [sg.Text("EDITAR EVENTO", font=("Helvetica", 20), justification="center")],
             [self.cria_input_de_string("Título do evento:", "it_titulo", dados["titulo"])],
             [self.cria_input_de_data("Data:", "it_data1", "it_data2", "it_data3", dados["data1"], dados["data2"], dados["data3"])],
@@ -21,8 +23,9 @@ class TelaEditarEventos(TelaAbstrata):
         
         self.__window = sg.Window("Gerenciador de eventos", element_justification="c").Layout(layout)
         
-    def open(self, dados):
-        self.init_components(dados)
+    def open(self, dados, organizadores, participantes_a_confirmar, participantes_confirmados):
+        
+        self.init_components(dados, organizadores, participantes_a_confirmar, participantes_confirmados)
         while True:
             event, values = self.__window.Read()
             print (event, values)
